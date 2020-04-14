@@ -2,12 +2,15 @@ package entity;
 
 import entity.base.Entity;
 import entity.base.Interactable;
+import logic.Direction;
 import logic.GameController;
 import logic.Sprites;
 
 public class Ghost extends Entity implements Interactable
 {
-
+	public Ghost() {
+		this.setDirection(Direction.UP);
+	}
 	@Override
 	public boolean interact(Entity e)
 	{

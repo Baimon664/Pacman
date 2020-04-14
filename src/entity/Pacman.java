@@ -6,7 +6,7 @@ import logic.GameController;
 import logic.Sprites;
 
 public class Pacman extends Entity {
-	private Direction face = Direction.RIGHT;
+	private Direction face = Direction.NONE;
 
 	@Override
 	public int getSymbol() {

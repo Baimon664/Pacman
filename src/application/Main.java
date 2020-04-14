@@ -35,7 +35,7 @@ public class Main extends Application{
 	public void start(Stage primaryStage) throws Exception {
 		gameMap = CSVParser.readCSV("level.csv");
 		
-		GameController.IntializeMap(gameMap,9,15);
+		GameController.IntializeMap(gameMap,9,15,8,8,10,8);
 		board_width = GameController.getCurrentMap().getWidth()*24;
 		board_height = GameController.getCurrentMap().getHeight()*24;
 		
@@ -61,14 +61,16 @@ public class Main extends Application{
 			public void handle(long arg0) {
 				// TODO Auto-generated method stub
 				GameController.movePacman(GameController.getPacmanFace());
+				GameController.moveGhost1();
+				GameController.moveGhost2();
 				ArrayList<Entity> allEntity = GameController.getCurrentMap().getAllEntity();
 				drawGameBoard(gc);
-//				try {
-//					Thread.sleep(100);
-//				} catch (InterruptedException e) {
-//					// TODO Auto-generated catch block
-//					e.printStackTrace();
-//				}
+				try {
+					Thread.sleep(100);
+				} catch (InterruptedException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
 			}
 		};
 		timer.start();
@@ -140,7 +142,7 @@ public class Main extends Application{
 				GameController.setPacmanFace(Direction.DOWN);
 				break;
 			case R:
-				GameController.IntializeMap(gameMap,9,15); //Reset Map
+				GameController.IntializeMap(gameMap,9,15,8,8,10,8); //Reset Map
 				break;
 			default:
 				System.out.println("Invalid Key.");
