@@ -18,6 +18,10 @@ public class GameController {
 	
 	private static Ghost ghost2;
 	
+	private static boolean pacmanAlive = true;
+	
+	private static int life;
+	
 	private static int coin_count;
 	
 	private static boolean win;
@@ -52,20 +56,33 @@ public class GameController {
 //	}
 	
 	public static void IntializeMap(String[][] map,int px,int py,int g1x ,int g1y,int g2x,int g2y) {
-		 pacman = new Pacman();
-		 ghost1 = new Ghost();
-		 ghost2 = new Ghost();
-		 
-		 
-		 setCoinCount(0);
-		 setGameWin(false);
-		 setPowerUp(false);
-		 
-		 gameMap = new GameMap(map);
-		 
-		 gameMap.addEntity(pacman, px, py);
-		 gameMap.addEntity(ghost1, g1x, g1y);
-		 gameMap.addEntity(ghost2, g2x, g2y);
+		if(GameController.isPacmanAlive()==true) {
+			 pacman = new Pacman();
+			 ghost1 = new Ghost();
+			 ghost2 = new Ghost();
+			 life = 3;
+			 
+			 setCoinCount(0);
+			 setGameWin(false);
+			 setPowerUp(false);
+			 
+			 gameMap = new GameMap(map);
+			 
+			 gameMap.addEntity(pacman, px, py);
+			 gameMap.addEntity(ghost1, g1x, g1y);
+			 gameMap.addEntity(ghost2, g2x, g2y);
+		}else {
+			pacman.remove();
+			ghost1.remove();
+			ghost2.remove();
+//			pacman = new Pacman();
+//			ghost1 = new Ghost();
+//			ghost2 = new Ghost();
+			gameMap.addEntity(pacman, px, py);
+			gameMap.addEntity(ghost1, g1x, g1y);
+			gameMap.addEntity(ghost2, g2x, g2y);
+			GameController.setPacmanAlive(true);
+		}
 		 
 		 //startTimer();
 	}
@@ -215,4 +232,29 @@ public class GameController {
 		}
 		moveGhost2R();
 	}
+
+	public static boolean isGhost1IsAlive() {
+		return ghost1.isAlive();
+	}
+
+	public static boolean isGhost2IsAlive() {
+		return ghost2.isAlive();
+	}
+
+	public static int getLife() {
+		return life;
+	}
+
+	public static void setLife(int life) {
+		GameController.life = life;
+	}
+
+	public static boolean isPacmanAlive() {
+		return pacmanAlive;
+	}
+
+	public static void setPacmanAlive(boolean pacmanAlive) {
+		GameController.pacmanAlive = pacmanAlive;
+	}
+	
 }

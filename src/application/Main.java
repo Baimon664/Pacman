@@ -4,12 +4,22 @@ import javafx.animation.AnimationTimer;
 import javafx.application.Application;
 
 import javafx.application.Platform;
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
+import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
+import javafx.scene.control.Button;
 import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyEvent;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.StackPane;
+import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
+import javafx.scene.text.Font;
+import javafx.scene.text.FontWeight;
+import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import logic.Cell;
 import logic.Direction;
@@ -31,6 +41,10 @@ public class Main extends Application{
 	
 	private String[][] gameMap;
 	
+	private Scene scene,menu,GameOver;
+	
+	private Thread thread;
+	
 	@Override
 	public void start(Stage primaryStage) throws Exception {
 		gameMap = CSVParser.readCSV("level.csv");
@@ -45,38 +59,113 @@ public class Main extends Application{
 		
 		StackPane root = new StackPane();
 		
-		Scene scene = new Scene(root, 854,480);
+		scene = new Scene(root, 854,480);
 		
 		Canvas canvas = new Canvas(854,480);
 		GraphicsContext gc = canvas.getGraphicsContext2D();
 		drawGameBoard(gc);
 		root.getChildren().add(canvas);
 		
-		addEventListener(scene,gc);
+		if(GameController.getLife() != 0) {
+			addEventListener(scene,gc);
+			
+			
+			//Register Event
+			AnimationTimer timer = new AnimationTimer() {
+				@Override
+				public void handle(long arg0) {
+					// TODO Auto-generated method stub
+					if(GameController.getLife() != 0) {
+						GameController.movePacman(GameController.getPacmanFace());
+						if(GameController.isGhost1IsAlive()) {
+							GameController.moveGhost1();
+						}
+						if(GameController.isGhost2IsAlive()) {
+							GameController.moveGhost2();
+						}
+						ArrayList<Entity> allEntity = GameController.getCurrentMap().getAllEntity();
+						drawGameBoard(gc);
+						if(GameController.isPacmanAlive() == false) {
+							GameController.IntializeMap(gameMap,9,15,8,8,10,8);
+						}
+					}else {
+						GameController.setGameLose(true);
+						primaryStage.setScene(GameOver);
+						GameOver.setOnKeyPressed(new EventHandler<KeyEvent>() {
+
+							@Override
+							public void handle(KeyEvent arg0) {
+								// TODO Auto-generated method stub
+								GameController.setPacmanAlive(true);
+								primaryStage.setScene(scene);
+								GameController.IntializeMap(gameMap,9,15,8,8,10,8);
+							}
+						});
+					}
+					try {
+						Thread.sleep(150);
+					} catch (InterruptedException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+				}
+			};
+			timer.start();
+		}else {
+			GameController.setGameLose(true);
+			primaryStage.setScene(GameOver);
+		}
 		
-		//Register Event
-		AnimationTimer timer = new AnimationTimer() {
+		
+		////////////menu////////////////
+		VBox vbox = new VBox(10);
+		vbox.setAlignment(Pos.CENTER);
+		Text text = new Text("Fucking Ghost Eat My Coin Whyyyyyyyyyy????");
+		text.setFont(Font.font("Cordia", FontWeight.NORMAL, 40));
+		Button startButton = new Button("Start");
+		startButton.setPrefSize(100, 40);
+		Button exitButton = new Button("Exit");
+		exitButton.setPrefSize(100, 40);
+		vbox.getChildren().addAll(text,startButton,exitButton);
+		
+		startButton.setOnMouseClicked(new EventHandler<MouseEvent>() {
 			
 			@Override
-			public void handle(long arg0) {
+			public void handle(MouseEvent arg0) {
 				// TODO Auto-generated method stub
-				GameController.movePacman(GameController.getPacmanFace());
-				GameController.moveGhost1();
-				GameController.moveGhost2();
-				ArrayList<Entity> allEntity = GameController.getCurrentMap().getAllEntity();
-				drawGameBoard(gc);
-				try {
-					Thread.sleep(100);
-				} catch (InterruptedException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
+				primaryStage.setScene(scene);
+				GameController.IntializeMap(gameMap,9,15,8,8,10,8);
 			}
-		};
-		timer.start();
+		});
+		
+		exitButton.setOnMouseClicked(new EventHandler<MouseEvent>() {
+
+			@Override
+			public void handle(MouseEvent arg0) {
+				// TODO Auto-generated method stub
+				Platform.exit();
+		        System.exit(0);
+			}
+		});
+		
+		menu = new Scene(vbox,854,480);
+		
+		////////GameOver//////////
+		VBox over = new VBox(5);
+		over.setAlignment(Pos.CENTER);
+		Text overText = new Text("Game Over!!!!!!!!!");
+		Text restartText = new Text("Press any key to restart");
+		overText.setFont(Font.font("Cordia", FontWeight.NORMAL, 40));
+		restartText.setFont(Font.font("Cordia", FontWeight.NORMAL, 20));
+		over.getChildren().addAll(overText,restartText);
+		
+		GameOver = new Scene(over, 854, 480);
+		
+		
 		
 		primaryStage.setTitle("Fucking Pacman");
-		primaryStage.setScene(scene);
+		primaryStage.setResizable(false);
+		primaryStage.setScene(menu);
 		primaryStage.show();
 	}
 	

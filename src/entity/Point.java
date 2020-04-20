@@ -3,6 +3,7 @@ package entity;
 import entity.base.Eatable;
 import entity.base.Entity;
 import entity.base.Interactable;
+import javafx.animation.AnimationTimer;
 import logic.GameController;
 import logic.Sprites;
 
@@ -17,6 +18,8 @@ public class Point extends Entity implements Interactable
 		if(e instanceof Pacman) {
 			this.remove();
 			GameController.setCoinCount(GameController.getCoinCount()+1);
+		}else if(e instanceof Ghost) {
+			this.remove();
 		}
 		return true;
 	}
