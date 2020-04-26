@@ -1,6 +1,5 @@
 package logic;
 
-import entity.base.Eatable;
 import entity.base.Entity;
 
 public class Cell {
@@ -21,13 +20,8 @@ public class Cell {
 			isEmpty = false;
 			return true;
 		}else { //The Cell is not empty
-			if(myEntity instanceof Eatable) {
-				Eatable d = (Eatable) myEntity;
-				return d.gotEatenBy(e);
-			}else {
 			return false;
 			} 
-		}
 	}
 	
 	public Entity getEntity() {

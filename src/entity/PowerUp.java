@@ -1,6 +1,5 @@
 package entity;
 
-import entity.base.Eatable;
 import entity.base.Entity;
 import entity.base.Interactable;
 import logic.GameController;
@@ -15,6 +14,7 @@ public class PowerUp extends Entity implements Interactable
 		if(e instanceof Pacman) {
 			this.remove();
 			GameController.setPowerUp(true);
+			GameController.setPowerUpTimeCount(0);
 		}
 		return true;
 	}
@@ -22,7 +22,7 @@ public class PowerUp extends Entity implements Interactable
 	@Override
 	public int getSymbol()
 	{
-		return Sprites.KEY;
+		return Sprites.POWERUP;
 	}
 	
 }

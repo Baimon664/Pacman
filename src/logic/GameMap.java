@@ -11,12 +11,14 @@ import entity.PowerUp;
 import entity.Wall;
 import entity.base.Entity;
 import entity.base.Interactable;
+import entity.base.MovingEntity;
 
 public class GameMap {
 
 	private Cell[][] cellmap;
 	private int width;
 	private int height;
+	private int allPoint;
 	
 	private ArrayList<Entity> allEntity;
 
@@ -38,6 +40,7 @@ public class GameMap {
 	public GameMap(String[][] map) {
 		
 		allEntity = new ArrayList<Entity>();
+		allPoint = 0;
 		
 		int column = map[0].length;
 		int row = map.length;
@@ -66,6 +69,7 @@ public class GameMap {
 					break;
 				case "O":
 					addEntity(new Point(), j, i);
+					setAllPoint(getAllPoint()+1);
 					break;
 				default:
 					System.out.println("Error parsing at position x = "+j+" y = "+i+".\nUnknown Object with Symbol "+map[i][j]);
@@ -115,6 +119,12 @@ public class GameMap {
 		
 		e.setX(x);
 		e.setY(y);
+		
+		if(e instanceof MovingEntity) {
+			System.out.println("stop thread duay");
+			return true;
+		}
+
 		boolean b = cellmap[y][x].setEntity(e);
 		
 		return b;
@@ -125,10 +135,10 @@ public class GameMap {
 	}
 	
 	public void removeEntity(int x, int y) {
-		
 		allEntity.remove(cellmap[y][x].getEntity());
-		
-		cellmap[y][x].removeEntity();
+		if(!(cellmap[y][x].getEntity() instanceof Ghost)) {
+			cellmap[y][x].removeEntity();
+		}
 	}
 	
 	public boolean isMovePossible(int targetx,int targety,Entity e) {
@@ -153,6 +163,16 @@ public class GameMap {
 	
 	public ArrayList<Entity> getAllEntity() {
 		return allEntity;
+	}
+
+	public int getAllPoint()
+	{
+		return allPoint;
+	}
+
+	public void setAllPoint(int allPoint)
+	{
+		this.allPoint = allPoint;
 	}
 	
 	

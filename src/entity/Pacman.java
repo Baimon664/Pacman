@@ -1,49 +1,42 @@
 package entity;
 
-import entity.base.Entity;
-import entity.base.Interactable;
+import entity.base.MovingEntity;
 import logic.Direction;
 import logic.GameController;
 import logic.Sprites;
 
-public class Pacman extends Entity implements Interactable {
-	private Direction face = Direction.NONE;
-
+public class Pacman extends MovingEntity
+{
+	private boolean animation = true;
+	public Pacman() {
+		setDirection(Direction.NONE);
+	}
 	@Override
-	public int getSymbol() {
-		// TODO Auto-generated method stub
-		if(GameController.isPowerUp()) {
-			return Sprites.COMPACTOR_ON;
+	public int getSymbol()
+	{
+//		if(GameController.isPowerUp()) {
+//			return Sprites.COMPACTOR_ON;
+//		}
+//		return Sprites.COMPACTOR_OFF;
+		if(animation == true) {
+			return Sprites.PLAYER;
+		}else if(getDirection()==Direction.UP) {
+			return Sprites.PLAYERUP;
+		}else if(getDirection()==Direction.DOWN) {
+			return Sprites.PLAYERDOWN;
+		}else if(getDirection()==Direction.RIGHT) {
+			return Sprites.PLAYERRIGHT;
+		}else {
+			return Sprites.PLAYERLEFT;
 		}
-		return Sprites.COMPACTOR_OFF;
+		
+	}
+	public boolean isAnimation() {
+		return animation;
+	}
+	public void setAnimation(boolean animation) {
+		this.animation = animation;
 	}
 	
-	public boolean step(Direction dir) {
-		this.move(dir);
-		return true;
-	}
 
-	public Direction getFace() {
-		return face;
-	}
-
-	public void setFace(Direction face) {
-		this.face = face;
-	}
-
-	@Override
-	public boolean interact(Entity e) {
-		// TODO Auto-generated method stub
-		if(e instanceof Ghost && GameController.isPowerUp() == false) {
-			this.remove();
-			GameController.setLife(GameController.getLife()-1);
-			GameController.setPacmanAlive(false);
-		}else if(e instanceof Ghost && GameController.isPowerUp() == true) {
-			e.remove();
-			e.setX(8);
-			e.setY(8);
-		}
-		return true;
-	}
-	
 }
