@@ -71,31 +71,4 @@ public abstract class MovingEntity extends Entity
 	public void setDirection(Direction direction) {
 		this.direction = direction;
 	}
-	
-	public boolean movePossible(Direction dir) {
-		int targetx = getX();
-		int targety = getY();
-		
-		direction = dir; //Update move position
-
-		switch(dir) {
-		case LEFT:
-			targetx -= 1;
-			break;
-		case UP:
-			targety -= 1;
-			break;
-		case RIGHT:
-			targetx += 1;
-			break;
-		case DOWN:
-			targety += 1;
-			break;
-		default:
-			break;
-		}
-		if(GameController.getCurrentMap().isMovePossible(targetx, targety, this)) {
-			return true;
-		}return false;
-	}
 }

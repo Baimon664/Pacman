@@ -1,5 +1,7 @@
 package entity;
 
+import java.util.Random;
+
 import entity.base.MovingEntity;
 import logic.Direction;
 import logic.GameController;
@@ -22,9 +24,25 @@ public class Ghost extends MovingEntity
 	public int getSymbol()
 	{	
 		if(GameController.isPowerUp()) {
-			return Sprites.GHOSTEAT;
+			if(GameController.getPowerUpTimeCount()>=50*GameController.getPowerupCount()-15) {
+				return Sprites.BLINKGHOST;
+			}
+			return Sprites.BLUEGHOST;
 		}
-		return Sprites.GHOST;
+		return Sprites.GHOST1;
+		
 	}
 
+	public int getSymbol2()
+	{	
+		if(GameController.isPowerUp()) {
+			if(GameController.getPowerUpTimeCount()>=50*GameController.getPowerupCount()-15) {
+				return Sprites.BLINKGHOST;
+			}
+			return Sprites.BLUEGHOST;
+		}
+		return Sprites.GHOST2;
+		
+	}
+	
 }

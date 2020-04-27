@@ -6,6 +6,6 @@ import logic.Sprites;
 public class Wall extends Entity
 {
 	public int getSymbol() {
-		return Sprites.WALL;
+		return Sprites.BLUEWALL;
 	}
 }

@@ -1,15 +1,14 @@
 package application;
 
-import javafx.animation.AnimationTimer;
+
+
 import javafx.application.Application;
 
 import javafx.application.Platform;
 import javafx.event.EventHandler;
-import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
-import javafx.scene.control.Button;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.MouseEvent;
@@ -18,17 +17,13 @@ import javafx.scene.layout.BackgroundImage;
 import javafx.scene.layout.BackgroundRepeat;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
-import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
-import javafx.scene.text.Font;
-import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
 import logic.Cell;
 import logic.Direction;
 import logic.GameController;
-import logic.Sprites;
 
 import java.util.ArrayList;
 
@@ -53,38 +48,158 @@ public class Main extends Application
 	public void start(Stage primaryStage) throws Exception
 	{
 		gameMap = CSVParser.readCSV("level.csv");
-
 		GameController.IntializeMap(gameMap, 9, 15, 8, 9, 10, 9);
 		board_width = GameController.getCurrentMap().getWidth() * 24;
 		board_height = GameController.getCurrentMap().getHeight() * 24;
-
-		draw_originx = 427 - board_width / 2;
+		draw_originx = 427 - board_width /2;
 		draw_originy = 240 - board_height / 2;
-
 		StackPane root = new StackPane();
 
 		Scene scene = new Scene(root, 854, 480);
 
 		Canvas canvas = new Canvas(854, 480);
 		GraphicsContext gc = canvas.getGraphicsContext2D();
-		drawGameBoard(gc);
 		root.getChildren().add(canvas);
 
 		// Register Event
 		addEventListener(scene, gc);
+
+///////////////////////menu/////////////////
 		
-		
+		GameController.setSound("sound/videogame-style.mp3");
+		Pane menuPane = new Pane();
+		BackgroundImage backgroundImage = new BackgroundImage(DrawUtil.getPacman_logo(), BackgroundRepeat.NO_REPEAT,
+				BackgroundRepeat.NO_REPEAT, null, null);
+		Background background = new Background(backgroundImage);
+		menuPane.setBackground(background);
+		Text start = new Text("Start");
+		start.setStyle("-fx-font-size: 50px; -fx-font-family:\"Candara\";-fx-fill: #ffd300; -fx-font-weight:bold");
+		start.setX(370);
+		start.setY(250);
+		Text exit = new Text("Exit");
+		exit.setX(380);
+		exit.setY(320);
+		exit.setStyle("-fx-font-size: 50px; -fx-font-family:\"Candara\";-fx-fill: #ffd300; -fx-font-weight:bold");
+		ImageView pacman_gif = DrawUtil.drawPacmanGif();
+		pacman_gif.setScaleX(0.5);
+		pacman_gif.setScaleY(0.5);
+		pacman_gif.setX(200);
+		pacman_gif.setY(300);
+		menuPane.getChildren().addAll(start, exit, pacman_gif);
+
+		start.setOnMouseClicked(new EventHandler<MouseEvent>()
+		{
+
+			@Override
+			public void handle(MouseEvent arg0)
+			{
+				// TODO Auto-generated method stub
+//				gameMap = CSVParser.readCSV("levelProgMeth.csv");
+//				GameController.IntializeMap(gameMap, 9, 15, 8, 9, 10, 9);
+//				board_width = GameController.getCurrentMap().getWidth() * 24;
+//				board_height = GameController.getCurrentMap().getHeight() * 24;
+//				draw_originx = 427 - board_width / 2;
+//				draw_originy = 240 - board_height / 2;
+				GameController.stopSound();
+				primaryStage.setScene(scene);
+//				GameController.IntializeMap(gameMap, 9, 13, 8, 8, 10, 8);
+				t1.start();
+			}
+		});
+
+		start.setOnMouseEntered(new EventHandler<MouseEvent>()
+		{
+
+			@Override
+			public void handle(MouseEvent arg0)
+			{
+				// TODO Auto-generated method stub
+				start.setStyle(
+						"-fx-font-size: 50 px; -fx-font-family:\"Candara\";-fx-fill: #ffffff; -fx-font-weight:bold");
+			}
+		});
+
+		start.setOnMouseExited(new EventHandler<MouseEvent>()
+		{
+
+			@Override
+			public void handle(MouseEvent arg0)
+			{
+				// TODO Auto-generated method stub
+				start.setStyle(
+						"-fx-font-size: 50px; -fx-font-family:\"Candara\";-fx-fill: #ffd300; -fx-font-weight:bold");
+			}
+		});
+
+		exit.setOnMouseClicked(new EventHandler<MouseEvent>()
+		{
+
+			@Override
+			public void handle(MouseEvent arg0)
+			{
+				// TODO Auto-generated method stub
+				Platform.exit();
+				System.exit(0);
+			}
+		});
+
+		exit.setOnMouseEntered(new EventHandler<MouseEvent>()
+		{
+
+			@Override
+			public void handle(MouseEvent arg0)
+			{
+				// TODO Auto-generated method stub
+				exit.setStyle(
+						"-fx-font-size: 50 px; -fx-font-family:\"Candara\";-fx-fill: #ffffff; -fx-font-weight:bold");
+			}
+		});
+
+		exit.setOnMouseExited(new EventHandler<MouseEvent>()
+		{
+
+			@Override
+			public void handle(MouseEvent arg0)
+			{
+				// TODO Auto-generated method stub
+				exit.setStyle(
+						"-fx-font-size: 50px; -fx-font-family:\"Candara\";-fx-fill: #ffd300; -fx-font-weight:bold");
+			}
+		});
+
+		Scene menu = new Scene(menuPane, 854, 480);
+
+		primaryStage.setOnCloseRequest(new EventHandler<WindowEvent>()
+		{
+
+			@Override
+			public void handle(WindowEvent arg0)
+			{
+				// TODO Auto-generated method stub
+				Platform.exit();
+				System.exit(0);
+			}
+		});
+
+		primaryStage.setTitle("Pacman Za");
+		primaryStage.setResizable(false);
+		primaryStage.setScene(menu);
+		primaryStage.show();
+
 		t1 = new Thread(new Runnable()
 		{
 
 			@Override
 			public void run()
 			{
-				while (true)
-				{
+//				while (!(GameController.getScore() == 0) && !GameController.isGameLose())
+//				{
+				while(true) {
 					GameController.movePacman();
+					GameController.killcheck();
 					GameController.moveGhost1();
 					GameController.moveGhost2();
+					GameController.killcheck();
 					ArrayList<Entity> allEntity = GameController.getCurrentMap().getAllEntity();
 					Platform.runLater(new Runnable()
 					{
@@ -103,117 +218,20 @@ public class Main extends Application
 						e.printStackTrace();
 					}
 				}
+
 			}
 		});
-        
-        Thread t2 = new Thread(new Runnable()
-        {
 
-            @Override
-            public void run()
-            {
-                // TODO Auto-generated method stub
-            	GameController.setSound("sound/pacman-die-sound.mp3");
-            }
-        });
-        t2.start();
-		
-		///////////////////////menu/////////////////
-		
-
-		Pane menuPane = new Pane();
-		BackgroundImage backgroundImage = new BackgroundImage(DrawUtil.getPacman_logo(), BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, null, null);
-		Background background = new Background(backgroundImage);
-		menuPane.setBackground(background);
-		Text start = new Text("Start");
-		start.setStyle("-fx-font-size: 50px; -fx-font-family:\"Candara\";-fx-fill: #ffd300; -fx-font-weight:bold");
-		start.setX(370);
-		start.setY(250);
-		Text exit = new Text("Exit");
-		exit.setX(380);
-		exit.setY(320);
-		exit.setStyle("-fx-font-size: 50px; -fx-font-family:\"Candara\";-fx-fill: #ffd300; -fx-font-weight:bold");
-		ImageView pacman_gif = DrawUtil.drawPacmanGif();
-		pacman_gif.setScaleX(0.5);
-		pacman_gif.setScaleY(0.5);
-		pacman_gif.setX(200);
-		pacman_gif.setY(300);
-		menuPane.getChildren().addAll(start,exit,pacman_gif);
-		
-		start.setOnMouseClicked(new EventHandler<MouseEvent>() {
-
-			@Override
-			public void handle(MouseEvent arg0) {
-				// TODO Auto-generated method stub
-				primaryStage.setScene(scene);
-				t1.start();
-			}
-		});
-		
-		start.setOnMouseEntered(new EventHandler<MouseEvent>() {
-
-			@Override
-			public void handle(MouseEvent arg0) {
-				// TODO Auto-generated method stub
-				start.setStyle("-fx-font-size: 50 px; -fx-font-family:\"Candara\";-fx-fill: #ffffff; -fx-font-weight:bold");
-			}
-		});
-		
-		start.setOnMouseExited(new EventHandler<MouseEvent>() {
-
-			@Override
-			public void handle(MouseEvent arg0) {
-				// TODO Auto-generated method stub
-				start.setStyle("-fx-font-size: 50px; -fx-font-family:\"Candara\";-fx-fill: #ffd300; -fx-font-weight:bold");
-			}
-		});
-		
-		exit.setOnMouseClicked(new EventHandler<MouseEvent>() {
-
-			@Override
-			public void handle(MouseEvent arg0) {
-				// TODO Auto-generated method stub
-				Platform.exit();
-				System.exit(0);
-			}
-		});
-		
-		exit.setOnMouseEntered(new EventHandler<MouseEvent>() {
-
-			@Override
-			public void handle(MouseEvent arg0) {
-				// TODO Auto-generated method stub
-				exit.setStyle("-fx-font-size: 50 px; -fx-font-family:\"Candara\";-fx-fill: #ffffff; -fx-font-weight:bold");
-			}
-		});
-		
-		exit.setOnMouseExited(new EventHandler<MouseEvent>() {
-
-			@Override
-			public void handle(MouseEvent arg0) {
-				// TODO Auto-generated method stub
-				exit.setStyle("-fx-font-size: 50px; -fx-font-family:\"Candara\";-fx-fill: #ffd300; -fx-font-weight:bold");
-			}
-		});
-		
-		
-		
-		Scene menu = new Scene(menuPane,854,480);
-		
-		primaryStage.setOnCloseRequest(new EventHandler<WindowEvent>() {
-			
-			@Override
-			public void handle(WindowEvent arg0) {
-				// TODO Auto-generated method stub
-				Platform.exit();
-				System.exit(0);
-			}
-		});
-		primaryStage.setTitle("Pacman Za");
-		primaryStage.setResizable(false);
-		primaryStage.setScene(menu);
-		primaryStage.show();
-
+//		Thread t2 = new Thread(new Runnable()
+//		{
+//
+//			@Override
+//			public void run()
+//			{
+//				GameController.setSound("sound/pacman-die-sound.mp3");
+//			}
+//		});
+//		t2.start();
 	}
 
 	public static void main(String[] args)
@@ -254,8 +272,8 @@ public class Main extends Application
 				draw_originy + GameController.getGhost1Y() * 24, GameController.getGhost1Sprite());
 		DrawUtil.drawSprite(gc, draw_originx + GameController.getGhost2X() * 24,
 				draw_originy + GameController.getGhost2Y() * 24, GameController.getGhost2Sprite());
-		DrawUtil.drawSprite(gc, draw_originx + GameController.getPacmanX() * 24,
-				draw_originy + GameController.getPacmanY() * 24, GameController.getPacmanSprite());
+		DrawUtil.drawPacman(gc, draw_originx + GameController.getPacmanX() * 24,
+				draw_originy + GameController.getPacmanY() * 24, GameController.getPacmanDirection());
 		// If lose, draw Congrats
 		if (GameController.isGameLose())
 		{
@@ -268,13 +286,10 @@ public class Main extends Application
 			gc.setGlobalAlpha(1);
 			// Draw Congratulations
 			DrawUtil.drawGameOver(gc, 427, 240);
-			GameController.setPacmanDirection(Direction.NONE);
-			GameController.setGhost1Direction(Direction.NONE);
-			GameController.setGhost2Direction(Direction.NONE);
 			t1.suspend();
 		}
 		// If win, draw Congrats
-		if (GameController.getScore()==0)
+		if (GameController.getScore() == 0)
 		{
 			// Darken the Screen
 			GameController.setSound("sound/coin-eat-sound.mp3");
@@ -285,9 +300,7 @@ public class Main extends Application
 			gc.setGlobalAlpha(1);
 			// Draw Congratulations
 			DrawUtil.drawCongrats(gc, 427, 240);
-			GameController.setPacmanDirection(Direction.NONE);
-			GameController.setGhost1Direction(Direction.NONE);
-			GameController.setGhost2Direction(Direction.NONE);
+			t1.suspend();
 		}
 	}
 
@@ -297,40 +310,29 @@ public class Main extends Application
 		{
 			// System.out.println("KeyPressed : " + event.getCode().toString());
 			KeyCode keycode = event.getCode();
-			if (!GameController.isGameWin())
+			switch (keycode)
 			{
-				switch (keycode)
-				{
-				case A:
-					GameController.setPacmanDirection(Direction.LEFT);
-					break;
-				case D:
-					GameController.setPacmanDirection(Direction.RIGHT);
-					break;
-				case W:
-					GameController.setPacmanDirection(Direction.UP);
-					break;
-				case S:
-					GameController.setPacmanDirection(Direction.DOWN);
-					break;
-				case R:
-					GameController.IntializeMap(gameMap, 9, 15, 8, 9, 10, 9); // Reset Map
-					t1.resume();
-					break;
-				default:
-					System.out.println("Invalid Key.");
-					break;
+			case A:
+				GameController.setPacmanDirection(Direction.LEFT);
+				break;
+			case D:
+				GameController.setPacmanDirection(Direction.RIGHT);
+				break;
+			case W:
+				GameController.setPacmanDirection(Direction.UP);
+				break;
+			case S:
+				GameController.setPacmanDirection(Direction.DOWN);
+				break;
+			case R:
+				GameController.stopSound();
+				GameController.IntializeMap(gameMap, 9, 15,8,9,10,9); // Reset Map
+				t1.resume();
+				break;
+			default:
+				System.out.println("Invalid Key.");
+				break;
 				}
-			} else
-			{
-				Platform.exit();
-				System.exit(0);
-			}
-
-			// ArrayList<Entity> allEntity = GameController.getCurrentMap().getAllEntity();
-			// update here
-			// drawGameBoard(gc);
-
 		});
 	}
 

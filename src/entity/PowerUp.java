@@ -14,7 +14,7 @@ public class PowerUp extends Entity implements Interactable
 		if(e instanceof Pacman) {
 			this.remove();
 			GameController.setPowerUp(true);
-			GameController.setPowerUpTimeCount(0);
+			GameController.setPowerupCount(GameController.getPowerupCount()+1);
 		}
 		return true;
 	}
