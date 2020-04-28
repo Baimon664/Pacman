@@ -14,6 +14,10 @@ public class DrawUtil {
 	private static Image pacman_gif = new Image(pacman_gif_path);
 	private static String pacman_logo_path = ClassLoader.getSystemResource("images/logo2.png").toString();
 	private static Image pacman_logo = new Image(pacman_logo_path);
+	private static String pacman_level1_path = ClassLoader.getSystemResource("images/level1.jpg").toString();
+	private static Image pacman_level1 = new Image(pacman_level1_path);
+	private static String pacman_level2_path = ClassLoader.getSystemResource("images/level2.jpg").toString();
+	private static Image pacman_level2 = new Image(pacman_level2_path);
 	
 	private static String congrat_path = ClassLoader.getSystemResource("images/congratulations.png").toString();
 	private static Image congratsprites = new Image(congrat_path);
@@ -85,8 +89,18 @@ public class DrawUtil {
 	}
 	
 	public static ImageView drawPacmanGif() {
-		ImageView a = new ImageView(pacman_gif);
-		return a;
+		ImageView image = new ImageView(pacman_gif);
+		return image;
+	}
+	
+	public static ImageView drawLevel1() {
+		ImageView image = new ImageView(pacman_level1);
+		return image;
+	}
+	
+	public static ImageView drawLevel2() {
+		ImageView image = new ImageView(pacman_level2);
+		return image;
 	}
 
 	public static Image getPacman_logo() {
