@@ -30,7 +30,7 @@ public class selectLevel {
 			public void handle(MouseEvent arg0) {
 				// TODO Auto-generated method stub
 				Level1.level1Scene();
-				GameController.stopSound();
+//				GameController.stopSound();
 				Main.getWindow().setScene(Level1.getScene());
 				Level1.startUpdate();
 			}

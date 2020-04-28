@@ -19,7 +19,7 @@ public class DrawUtil {
 	private static String pacman_level2_path = ClassLoader.getSystemResource("images/level2.jpg").toString();
 	private static Image pacman_level2 = new Image(pacman_level2_path);
 	
-	private static String congrat_path = ClassLoader.getSystemResource("images/congratulations.png").toString();
+	private static String congrat_path = ClassLoader.getSystemResource("images/congrat.png").toString();
 	private static Image congratsprites = new Image(congrat_path);
 	private static String over_path = ClassLoader.getSystemResource("images/gameover.png").toString();
 	private static Image oversprites = new Image(over_path);

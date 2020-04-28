@@ -122,7 +122,8 @@ public class Level1 {
 		if (GameController.isGameLose())
 		{
 			// Darken the Screen
-			GameController.setSound("sound/winning-sound.mp3");
+			GameController.stopSound();
+			GameController.setSound("sound/pacman-die-sound.mp3");
 			gc.setGlobalAlpha(0.8);
 			gc.setFill(Color.BLACK);
 			gc.fillRect(draw_originx, draw_originy, board_width, board_height);
@@ -136,7 +137,8 @@ public class Level1 {
 		if (GameController.getScore() == 0)
 		{
 			// Darken the Screen
-			GameController.setSound("sound/coin-eat-sound.mp3");
+			GameController.stopSound();
+			GameController.setSound("sound/winning-sound.mp3");
 			gc.setGlobalAlpha(0.8);
 			gc.setFill(Color.BLACK);
 			gc.fillRect(draw_originx, draw_originy, board_width, board_height);
