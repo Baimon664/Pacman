@@ -30,8 +30,7 @@ public class Main extends Application
 	{
 		window = primaryStage;
 ///////////////////////menu/////////////////
-		
-		GameController.setSound("sound/videogame-style.mp3");
+		Sound.playIntroSound();
 		Pane menuPane = new Pane();
 		BackgroundImage backgroundImage = new BackgroundImage(DrawUtil.getPacman_logo(), BackgroundRepeat.NO_REPEAT,
 				BackgroundRepeat.NO_REPEAT, null, null);

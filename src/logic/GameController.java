@@ -2,6 +2,7 @@ package logic;
 
 import java.util.Random;
 
+import application.Sound;
 import entity.Ghost;
 import entity.Pacman;
 import javafx.scene.media.Media;
@@ -25,8 +26,6 @@ public class GameController
 	private static boolean PowerUp;
 	private static int powerUpTimeCount;
 	private static int powerupCount;
-
-	private static MediaPlayer mediaPlayer;
 
 	public static void IntializeMap(String[][] map, int px, int py, int g1x, int g1y, int g2x, int g2y)
 	{
@@ -61,7 +60,7 @@ public class GameController
 	public static void movePacman()
 	{
 		if(GameController.getPacmanDirection() != Direction.NONE) {
-			GameController.setSound("sound/coin-eat-sound.mp3");
+			Sound.playCoinSound();
 		}
 		pacman.move();
 
@@ -370,16 +369,7 @@ public class GameController
 	{
 		GameController.powerupCount = powerupCount;
 	}
-	public static void setSound(String name) {
-		String sound_path = ClassLoader.getSystemResource(name).toString();
-		Media media = new Media(sound_path);
-		mediaPlayer = new MediaPlayer(media);
-		mediaPlayer.setVolume(0.1);
-		mediaPlayer.setAutoPlay(true);
-	}
-	public static void stopSound() {
-		mediaPlayer.stop();
-	}
+
 	
 
 }

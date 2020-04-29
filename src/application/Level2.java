@@ -122,8 +122,8 @@ public class Level2 {
 		if (GameController.isGameLose())
 		{
 			// Darken the Screen
-			GameController.stopSound();
-			GameController.setSound("sound/pacman-die-sound.mp3");
+			Sound.stopCoinSound();
+			Sound.playDieSound();
 			gc.setGlobalAlpha(0.8);
 			gc.setFill(Color.BLACK);
 			gc.fillRect(draw_originx, draw_originy, board_width, board_height);
@@ -137,8 +137,8 @@ public class Level2 {
 		if (GameController.getScore() == 0)
 		{
 			// Darken the Screen
-			GameController.stopSound();
-			GameController.setSound("sound/winning-sound.mp3");
+			Sound.stopCoinSound();
+			Sound.playWinSound();
 			gc.setGlobalAlpha(0.8);
 			gc.setFill(Color.BLACK);
 			gc.fillRect(draw_originx, draw_originy, board_width, board_height);
@@ -171,7 +171,8 @@ public class Level2 {
 				GameController.setPacmanDirection(Direction.DOWN);
 				break;
 			case R:
-				GameController.stopSound();
+				Sound.stopDieSound();
+				Sound.stopWinSound();
 				GameController.IntializeMap(gameMap, 9, 13, 13, 10, 14, 10); // Reset Map
 				getUpdate().resume();
 				break;

@@ -29,8 +29,8 @@ public class selectLevel {
 			@Override
 			public void handle(MouseEvent arg0) {
 				// TODO Auto-generated method stub
+				Sound.stopIntroSound();
 				Level1.level1Scene();
-				GameController.stopSound();
 				Main.getWindow().setScene(Level1.getScene());
 				Level1.startUpdate();
 			}
@@ -40,8 +40,8 @@ public class selectLevel {
 			@Override
 			public void handle(MouseEvent arg0) {
 				// TODO Auto-generated method stub
+				Sound.stopIntroSound();
 				Level1.level1Scene();
-				GameController.stopSound();
 				Main.getWindow().setScene(Level1.getScene());
 				Level1.startUpdate();
 			}
@@ -84,8 +84,8 @@ public class selectLevel {
 			@Override
 			public void handle(MouseEvent arg0) {
 				// TODO Auto-generated method stub
+				Sound.stopIntroSound();
 				Level2.level2Scene();
-				GameController.stopSound();
 				Main.getWindow().setScene(Level2.getScene());
 				Level2.startUpdate();
 			}
@@ -95,8 +95,8 @@ public class selectLevel {
 			@Override
 			public void handle(MouseEvent arg0) {
 				// TODO Auto-generated method stub
+				Sound.stopIntroSound();
 				Level2.level2Scene();
-				GameController.stopSound();
 				Main.getWindow().setScene(Level2.getScene());
 				Level2.startUpdate();
 			}
