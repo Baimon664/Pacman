@@ -26,6 +26,8 @@ public class GameController
 	private static boolean PowerUp;
 	private static int powerUpTimeCount;
 	private static int powerupCount;
+	
+	private static boolean start;
 
 	public static void IntializeMap(String[][] map, int px, int py, int g1x, int g1y, int g2x, int g2y)
 	{
@@ -33,6 +35,7 @@ public class GameController
 		ghost1 = new Ghost();
 		ghost2 = new Ghost();
 
+		setStart(true);
 		setGameWin(false);
 		setPowerUp(false);
 		setPowerUpTimeCount(0);
@@ -59,8 +62,9 @@ public class GameController
 
 	public static void movePacman()
 	{
-		if(GameController.getPacmanDirection() != Direction.NONE) {
+		if(GameController.getPacmanDirection() != Direction.NONE && isStart()) {
 			Sound.playCoinSound();
+			setStart(false);
 		}
 		pacman.move();
 
@@ -370,6 +374,14 @@ public class GameController
 		GameController.powerupCount = powerupCount;
 	}
 
+	public static boolean isStart() {
+		return start;
+	}
+
+	public static void setStart(boolean start) {
+		GameController.start = start;
+	}
+	
 	
 
 }

@@ -25,9 +25,8 @@ public class Sound {
 
 	
 	public static void playCoinSound() {
-		if(coinAudioClip.isPlaying() == false) {
-			coinAudioClip.play(0.1);
-		}
+		coinAudioClip.setCycleCount(300);
+		coinAudioClip.play(0.1);
 	}
 	
 	public static void stopCoinSound() {
