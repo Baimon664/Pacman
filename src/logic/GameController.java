@@ -63,7 +63,7 @@ public class GameController
 	public static void movePacman()
 	{
 		if(GameController.getPacmanDirection() != Direction.NONE && isStart()) {
-			Sound.playCoinSound();
+			Sound.playWalkSound();
 			setStart(false);
 		}
 		pacman.move();

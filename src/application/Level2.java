@@ -122,7 +122,7 @@ public class Level2 {
 		if (GameController.isGameLose())
 		{
 			// Darken the Screen
-			Sound.stopCoinSound();
+			Sound.stopWalkSound();
 			Sound.playDieSound();
 			gc.setGlobalAlpha(0.8);
 			gc.setFill(Color.BLACK);
@@ -137,7 +137,7 @@ public class Level2 {
 		if (GameController.getScore() == 0)
 		{
 			// Darken the Screen
-			Sound.stopCoinSound();
+			Sound.stopWalkSound();
 			Sound.playWinSound();
 			gc.setGlobalAlpha(0.8);
 			gc.setFill(Color.BLACK);
