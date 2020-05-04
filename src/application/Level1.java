@@ -10,6 +10,8 @@ import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.input.KeyCode;
 import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
+import javafx.scene.text.Font;
+import javafx.scene.text.FontWeight;
 import logic.Cell;
 import logic.Direction;
 import logic.GameController;
@@ -118,6 +120,9 @@ public class Level1 {
 				draw_originy + GameController.getGhost2Y() * 24, GameController.getGhost2Sprite());
 		DrawUtil.drawPacman(gc, draw_originx + GameController.getPacmanX() * 24,
 				draw_originy + GameController.getPacmanY() * 24, GameController.getPacmanDirection());
+		gc.setFill(Color.WHITE);
+		gc.setFont(Font.font("Candara", FontWeight.NORMAL, 20));
+		gc.fillText("Score : "+GameController.getScorePointText(), 700, 20);
 		// If lose, draw Congrats
 		if (GameController.isGameLose())
 		{
@@ -173,6 +178,8 @@ public class Level1 {
 			case R:
 				Sound.stopDieSound();
 				Sound.stopWinSound();
+				Sound.stopWalkSound();
+				GameController.setStart(false);
 				GameController.IntializeMap(gameMap, 9, 15,8,9,10,9); // Reset Map
 				getUpdate().resume();
 				break;

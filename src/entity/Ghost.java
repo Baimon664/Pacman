@@ -1,7 +1,5 @@
 package entity;
 
-import java.util.Random;
-
 import entity.base.MovingEntity;
 import logic.Direction;
 import logic.GameController;

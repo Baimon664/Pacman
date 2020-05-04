@@ -13,6 +13,7 @@ public class PowerUp extends Entity implements Interactable
 	{
 		if(e instanceof Pacman) {
 			this.remove();
+			GameController.setScorePoint(GameController.getScorePoint()+200);
 			GameController.setPowerUp(true);
 			GameController.setPowerupCount(GameController.getPowerupCount()+1);
 		}

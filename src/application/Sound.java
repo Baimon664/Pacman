@@ -1,8 +1,6 @@
 package application;
 
 import javafx.scene.media.AudioClip;
-import javafx.scene.media.Media;
-import javafx.scene.media.MediaPlayer;
 
 public class Sound {
 	private static String walk_sound_path = ClassLoader.getSystemResource("sound/coin-eat-sound.mp3").toString();

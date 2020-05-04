@@ -6,9 +6,8 @@ import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
 import javafx.scene.text.Text;
-import logic.GameController;
 
-public class selectLevel {
+public class SelectLevel {
 	private static Scene selectLevel;
 	
 	public static void selectLevelScene() {

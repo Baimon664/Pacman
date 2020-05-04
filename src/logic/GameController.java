@@ -5,8 +5,6 @@ import java.util.Random;
 import application.Sound;
 import entity.Ghost;
 import entity.Pacman;
-import javafx.scene.media.Media;
-import javafx.scene.media.MediaPlayer;
 
 public class GameController
 {
@@ -18,6 +16,8 @@ public class GameController
 	private static Ghost ghost2;
 
 	private static int score;
+	
+	private static int scorePoint;
 
 	private static boolean win;
 
@@ -41,6 +41,7 @@ public class GameController
 		setPowerUpTimeCount(0);
 		setPowerupCount(0);
 		setGameLose(false);
+		setScorePoint(0);
 
 		gameMap = new GameMap(map);
 		setScore(gameMap.getAllPoint());
@@ -62,7 +63,7 @@ public class GameController
 
 	public static void movePacman()
 	{
-		if(GameController.getPacmanDirection() != Direction.NONE && isStart()) {
+		if((GameController.getPacmanDirection() != Direction.NONE) && (isStart())) {
 			Sound.playWalkSound();
 			setStart(false);
 		}
@@ -82,11 +83,13 @@ public class GameController
 			if (getPacmanX() == getGhost1X() && getPacmanY() == getGhost1Y())
 			{
 				ghost1.dead();
+				GameController.setScorePoint(GameController.getScorePoint()+500);
 				return true;
 			}
 			if (getPacmanX() == getGhost2X() && getPacmanY() == getGhost2Y())
 			{
 				ghost2.dead();
+				GameController.setScorePoint(GameController.getScorePoint()+500);
 				return true;
 			}
 			
@@ -380,6 +383,18 @@ public class GameController
 
 	public static void setStart(boolean start) {
 		GameController.start = start;
+	}
+
+	public static int getScorePoint() {
+		return scorePoint;
+	}
+
+	public static void setScorePoint(int scorePoint) {
+		GameController.scorePoint = scorePoint;
+	}
+	
+	public static String getScorePointText() {
+		return Integer.toString(scorePoint);
 	}
 	
 	

@@ -16,10 +16,9 @@ import javafx.scene.layout.Pane;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
-import logic.GameController;
 
 import application.DrawUtil;
-import application.selectLevel;;
+import application.SelectLevel;;
 //import entity.base.Updatable;
 
 public class Main extends Application
@@ -58,8 +57,8 @@ public class Main extends Application
 			public void handle(MouseEvent arg0)
 			{
 				// TODO Auto-generated method stub
-				selectLevel.selectLevelScene();
-				window.setScene(selectLevel.getSelectLevel());
+				SelectLevel.selectLevelScene();
+				window.setScene(SelectLevel.getSelectLevel());
 			}
 		});
 
